@@ -7,4 +7,6 @@ const dbConnection = new Sequelize(DB.NAME, DB.USER, DB.PASSWORD, {
   dialect: DB.DIALECT,
 });
 
+
+
 module.exports = { dbConnection };

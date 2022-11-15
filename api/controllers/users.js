@@ -1,18 +1,41 @@
 const userRepository = require("../repositories/users");
 
-const registry = async (req, res) => {
+
+const getAll = async (req, res) => {
   try {
-    const { body } = req;
+    const showAllUsers = await userRepository.getAllUsers();
 
-    const addNewUser = await userRepository.createUser({
-      name: body.name,
-      email: body.email,
-    });
+    
+    return res.status(201).json(showAllUsers);
 
-    return res.status(201).send(addNewUser);
+    
   } catch (error) {
     return res.status(500).send("Ha ocurrido un error en el servidor");
   }
 };
 
-module.exports = { registry };
+
+
+const registry = async (req, res) => {
+  try {
+    console.log("inició de registro");
+    const { body } = req;
+
+    const addNewUser = await userRepository.createUser({
+      name: body.name,
+      email: body.email,
+      is_student: body.is_student,
+      status: body.status
+    });
+
+    return res.status(201).send(addNewUser);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Probando mensaje");
+  }
+};
+
+module.exports = {
+  getAll, 
+  registry
+ };
