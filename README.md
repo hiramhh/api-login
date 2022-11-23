@@ -74,4 +74,12 @@ Puedes ver esto en la propia documentación de Sequelize: https://sequelize.org/
 
 ### 3. Ejecutar migraciones\*\*
 
-`npx sequelize db:migrate --url "postgres://DB_USER:DB_PASSWORD@DB_HOST:DB_PORT/DB_NAME"`
+`npx sequelize db:migrate --url "postgres://hiram:hackademy@localhost:5432/eduaction_match"`
+
+
+
+
+
+<!-- modelo de migarción -->
+
+npx sequelize-cli model:generate --name student --attributes id_user:integer,name:string,last_name:string,natiolality:string,gender:string,age:integer,tiny_description:text,likes:text,registration_date:dateonly

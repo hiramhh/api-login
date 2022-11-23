@@ -1,6 +1,6 @@
 const models = require("../../database/models");
 
-const getAllUsers = async () =>{
+const getUsers = async () =>{
   try{
     const users = await models.users.findAll();
 
@@ -13,19 +13,20 @@ const getAllUsers = async () =>{
 const createUser = async (data) => {
   try {
     const user = await models.users.create({
-      name: data.name,
       email: data.email,
+      password:data.password,
       is_student: data.is_student,
       status: data.status
     });
 
     return user;
   } catch (error) {
+    console.log(error);
     throw new Error(error);
   }
 };
 
 module.exports = { 
-  getAllUsers,
+  getUsers,
   createUser
 };

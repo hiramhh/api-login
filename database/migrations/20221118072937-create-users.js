@@ -8,20 +8,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       email: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
+      },
+      password: {
+        type: Sequelize.STRING
       },
       is_student: {
-        type:Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN
       },
       status: {
-        type:Sequelize.BOOLEAN,
-        defaultValue: true
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
