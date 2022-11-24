@@ -10,8 +10,28 @@ const getUsers = async () =>{
   }
 }
 
+const validateDataUsers = async (data) => {
+  try {
+    models.users.findOne({
+      where:{
+        email: data.email
+      }
+    }).then(user => {
+      if (user) {
+        return user;
+      }
+    })
+  } catch (error){
+    throw new Error(error);
+  }
+
+}
+
+
+
 const createUser = async (data) => {
   try {
+
     const user = await models.users.create({
       email: data.email,
       password:data.password,
@@ -28,5 +48,6 @@ const createUser = async (data) => {
 
 module.exports = { 
   getUsers,
+  validateDataUsers,
   createUser
 };
