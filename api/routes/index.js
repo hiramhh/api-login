@@ -9,6 +9,7 @@ router.get("/users", users.getAll);
 
 
 router.get("/students", students.getAll);
-router.post("/students-registry", students.registry);
+router.post("/students-registry", students.validate, students.registry);
+router.post("/login",students.login);
 
 module.exports = router;

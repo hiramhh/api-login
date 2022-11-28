@@ -10,4 +10,5 @@ module.exports = {
     PORT: process.env.DB_PORT,
     DIALECT: process.env.DB_DIALECT || "postgres",
   },
+  JWT_KEYWORD: process.env.JWT_KEYWORD
 };

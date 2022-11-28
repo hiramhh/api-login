@@ -10,22 +10,22 @@ const getUsers = async () =>{
   }
 }
 
-const validateDataUsers = async (data) => {
-  try {
-    models.users.findOne({
-      where:{
-        email: data.email
-      }
-    }).then(user => {
-      if (user) {
-        return user;
-      }
-    })
-  } catch (error){
-    throw new Error(error);
-  }
+// const validateDataUsers = async (data) => {
+//   try {
+//      const user = await models.users.findOne({
+//       where:{
+//         email: data.email
+//       }
+//     })
+//       if (user) {
+//         return user;
+//       }
+//     }
+//     catch (error){
+//       throw new Error(error);
+//     }
+//   } 
 
-}
 
 
 
@@ -48,6 +48,6 @@ const createUser = async (data) => {
 
 module.exports = { 
   getUsers,
-  validateDataUsers,
+  // validateDataUsers,
   createUser
 };

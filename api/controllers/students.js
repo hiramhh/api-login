@@ -1,6 +1,8 @@
 const userRepository = require("../repositories/users");
 const studentRepository = require("../repositories/students");
 const models = require("../../database/models");
+const {JWT_KEYWORD} = require("../../config");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 
@@ -18,40 +20,37 @@ const getAll = async (req, res) => {
   }
 };
 
+const validate = async (req, res, next) => {
+  try{
+    // const {body} = req;
 
+    // await userRepository.validateDataUsers(body);
+
+    // res.status(409).send({
+    //   messagge: "Failed! email is already in use!"
+    // })
+
+
+    const user = await models.users.findOne({
+      where:{
+        email: req.body.email
+      }
+    })
+    if (user) {
+      throw new Error("Correo existente");
+      }
+    next();
+  }
+  catch (error){
+    return res.status(400).send(error.messagge);
+  }
+}
 
 const registry = async (req, res) => {
   try {
     console.log("inició de registro");
     const { body } = req;
 
-    // await userRepository.validateDataUsers(body.email).then(email => {
-    //   if (email){
-    //     res.status(400).send({
-    //       message: "Failed! email is already in use!"
-    //     });
-    //   }
-    //   return;
-    // });
-
-    await userRepository.validateDataUsers(body);
-
-    res.status(400).send({
-      messagge: "Failed! email is already in use!"
-    })
-
-
-    // models.users.findOne({
-    //   where:{
-    //     email: body.email
-    //   }
-    // }).then(user => {
-    //   if (user) {
-    //     res.status(400).send({
-    //       messagge: "Failed! email is already in use!"
-    //     })
-    //   }
-    // })
 
     let hashPassword = bcrypt.hashSync(body.password, 8);
 
@@ -75,8 +74,52 @@ const registry = async (req, res) => {
 };
 
 
+const login = async (req, res) => {
+  try {
+    const user = await models.users.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
+    if (!user){
+      return res.status(404).send({
+        messagge: "User Not Found."
+      });
+    }
+    const passworValid = await bcrypt.compareSync(
+      req.body.password, user.password
+      );
+      
+      if(!passworValid){
+        return res.status(401).send({
+          accessToken: null,
+          messagge: "Invalid Password!"
+        });
+      }
+  
+      const token = jwt.sign({id:user.id}, JWT_KEYWORD, {
+        expiresIn: 86400
+      });
+
+     console.log(user);
+     delete user.password;
+      return res.status(201).send({
+        user: user,
+        accesToken: token 
+      });
+      }
+      
+      catch(error){
+        console.log(error);
+    return res.status(500).send({
+      messagge: error.messagge
+    });
+  }
+}
 
 module.exports = {
-  getAll, 
-  registry
+  getAll,
+  validate, 
+  registry,
+  login
  };
