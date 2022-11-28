@@ -9,8 +9,6 @@ const bcrypt = require("bcryptjs");
 const getAll = async (req, res) => {
   try {
     const showStudents = await userRepository.getStudents();
-
-    // const showAllUsers = await userRepository.getUsers();
     
     return res.status(201).json(showStudents);
 
@@ -20,35 +18,10 @@ const getAll = async (req, res) => {
   }
 };
 
-const validate = async (req, res, next) => {
-  try{
-    // const {body} = req;
 
-    // await userRepository.validateDataUsers(body);
-
-    // res.status(409).send({
-    //   messagge: "Failed! email is already in use!"
-    // })
-
-
-    const user = await models.users.findOne({
-      where:{
-        email: req.body.email
-      }
-    })
-    if (user) {
-      throw new Error("Correo existente");
-      }
-    next();
-  }
-  catch (error){
-    return res.status(400).send(error.messagge);
-  }
-}
 
 const registry = async (req, res) => {
   try {
-    console.log("inició de registro");
     const { body } = req;
 
 
@@ -118,8 +91,7 @@ const login = async (req, res) => {
 }
 
 module.exports = {
-  getAll,
-  validate, 
+  getAll, 
   registry,
   login
  };

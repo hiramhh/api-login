@@ -10,23 +10,6 @@ const getUsers = async () =>{
   }
 }
 
-// const validateDataUsers = async (data) => {
-//   try {
-//      const user = await models.users.findOne({
-//       where:{
-//         email: data.email
-//       }
-//     })
-//       if (user) {
-//         return user;
-//       }
-//     }
-//     catch (error){
-//       throw new Error(error);
-//     }
-//   } 
-
-
 
 
 const createUser = async (data) => {
@@ -48,6 +31,5 @@ const createUser = async (data) => {
 
 module.exports = { 
   getUsers,
-  // validateDataUsers,
   createUser
 };
