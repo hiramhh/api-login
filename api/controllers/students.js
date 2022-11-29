@@ -90,8 +90,27 @@ const login = async (req, res) => {
   }
 }
 
+const dataStudents = async (req, res) => {
+  try{
+    const user = await models.students.findOne({
+      where:{
+        userId: req.id
+      }
+    })
+    if (user) {
+      return res.status(201).send(user);
+      }}
+  catch (error){
+    console.log(error);
+    return res.status(400).send(error.messagge);
+  }
+}
+
+
+
 module.exports = {
   getAll, 
   registry,
-  login
+  login,
+  dataStudents
  };
