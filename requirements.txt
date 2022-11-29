@@ -1,0 +1,6 @@
+django==4.0
+djangorestframework==3.12
+psycopg2==2.9.5
+drf-yasg
+djangorestframework-simplejwt
+python-decouple==3.6
