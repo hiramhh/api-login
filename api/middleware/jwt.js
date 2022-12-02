@@ -17,7 +17,7 @@ const verifyToken = async (req, res, next) => {
     next();
   }
   catch(error){
-    return res.status(401).send(error.message);
+    return res.status(401).send("Error en el middleware de verificacion de tokens", error.message);
   }
 };
 

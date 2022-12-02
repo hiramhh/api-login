@@ -6,19 +6,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 
-const getAll = async (req, res) => {
-  try {
-    const showStudents = await userRepository.getStudents();
-    
-    return res.status(201).json(showStudents);
-
-    
-  } catch (error) {
-    return res.status(500).send("Ha ocurrido un error en el servidor de estudiantes");
-  }
-};
-
-
 
 const registry = async (req, res) => {
   try {
@@ -74,8 +61,6 @@ const login = async (req, res) => {
         expiresIn: 86400
       });
 
-     console.log(user);
-     delete user.password;
       return res.status(201).send({
         user: user,
         accesToken: token 
@@ -102,15 +87,54 @@ const dataStudents = async (req, res) => {
       }}
   catch (error){
     console.log(error);
-    return res.status(400).send(error.messagge);
+    return res.status(400).send("error en la funcion dataStudents",error.messagge);
   }
 }
 
 
+const getUserData = async (req, res) => {
+  try{
+
+    let user = await models.students.findOne({
+      where:{
+        userId: req.id
+      }
+    });
+    user.set(body);
+    
+    user = await user.save();
+    
+    
+    return res.status(201).send(user);
+  }
+  catch(error){
+    return res.status(400).send(error.messagge);
+  }
+  
+}
+
+// const deletingUser = async (req, res) => {
+//   try {
+    
+//     let user = await models.students.findOne({
+//       where:{
+//         userId: req.id
+//       },
+//       include: {
+//         model: models.students
+//       }
+//     });
+
+//   } catch (error) {
+    
+//   }
+// }
+
+
 
 module.exports = {
-  getAll, 
   registry,
   login,
-  dataStudents
- };
+  dataStudents,
+  getUserData
+};

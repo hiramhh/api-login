@@ -2,7 +2,7 @@ const models = require("../../database/models");
 
 const getStudents = async () =>{
   try{
-    const students = await models.student.findAll();
+    const students = await models.students.findAll();
 
     return students;
   } catch (error){
@@ -33,6 +33,9 @@ const createStudent = async (data) => {
     throw new Error(error);
   }
 };
+
+
+
 
 module.exports = { 
   getStudents,

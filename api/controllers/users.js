@@ -1,6 +1,5 @@
 const userRepository = require("../repositories/users");
 
-
 const getAll = async (req, res) => {
   try {
     const showAllUsers = await userRepository.getUsers();
@@ -10,7 +9,8 @@ const getAll = async (req, res) => {
 
     
   } catch (error) {
-    return res.status(500).send("Ha ocurrido un error en el servidor");
+    console.log(error);
+    return res.status(500).send(error.message);
   }
 };
 

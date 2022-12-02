@@ -1,18 +1,31 @@
 const users = require("../controllers/users");
 const students = require("../controllers/students");
-const validateData = require("../middleware/validateData");
-const validateToken = require("../middleware/jwt");
+const middleware = require("../middleware/index");
+
 
 const { Router } = require("express");
 
 const router = Router();
 
-router.get("/users", users.getAll); 
+// Get all users
+router.get("/users", users.getAll);
 
+// Create user
+router.post("/students-registry", middleware.getDataValidated.validate, students.registry);
 
-router.get("/students", students.getAll);
-router.post("/students-registry", validateData.validate, students.registry);
+// login
 router.post("/login",students.login);
-router.get("/user", validateToken.verifyToken, students.dataStudents);
+
+// Get user data by Token
+router.get("/user", middleware.verifyToken.verifyToken, students.dataStudents);
+
+
+// Update user
+router.put("/update-data", middleware.verifyToken.verifyToken, students.getUserData);
+
+
+
+
+// Delete user
 
 module.exports = router;

@@ -2,7 +2,12 @@ const models = require("../../database/models");
 
 const getUsers = async () =>{
   try{
-    const users = await models.users.findAll();
+    const users = await models.users.findAll({
+      attributes: { exclude : ["password"]},
+      include: {
+        model: models.students
+      }
+    });
 
     return users;
   } catch (error){
