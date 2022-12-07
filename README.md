@@ -83,3 +83,5 @@ Puedes ver esto en la propia documentación de Sequelize: https://sequelize.org/
 <!-- modelo de migarción -->
 
 npx sequelize-cli model:generate --name student --attributes id_user:integer,name:string,last_name:string,natiolality:string,gender:string,age:integer,tiny_description:text,likes:text,registration_date:dateonly
+
+npx sequelize-cli model:generate --name users --attributes email:string,password:string,is_student:boolean,status:boolean

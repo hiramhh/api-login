@@ -113,22 +113,24 @@ const getUserData = async (req, res) => {
   
 }
 
-// const deletingUser = async (req, res) => {
-//   try {
+const deleteUser = async (req, res) => {
+  try {
     
-//     let user = await models.students.findOne({
-//       where:{
-//         userId: req.id
-//       },
-//       include: {
-//         model: models.students
-//       }
-//     });
+    let user = await models.users.findOne({
+      where:{
+        id: req.id
+      }
+    });
 
-//   } catch (error) {
-    
-//   }
-// }
+    if(user){
+      await user.destroy();
+    }
+    return res.status(201).send("delete");
+  } catch (error) {
+    console.log(error);
+    return res.status(404).send(error.messagge);
+  }
+}
 
 
 
@@ -136,5 +138,6 @@ module.exports = {
   registry,
   login,
   dataStudents,
-  getUserData
+  getUserData,
+  deleteUser
 };

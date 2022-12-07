@@ -24,8 +24,7 @@ router.get("/user", middleware.verifyToken.verifyToken, students.dataStudents);
 router.put("/update-data", middleware.verifyToken.verifyToken, students.getUserData);
 
 
-
-
 // Delete user
+router.delete("/delete-user", middleware.verifyToken.verifyToken, students.deleteUser);
 
 module.exports = router;
