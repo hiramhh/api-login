@@ -17,10 +17,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   users.init({
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    is_student: DataTypes.BOOLEAN,
-    status: DataTypes.BOOLEAN
+    email:{
+      type: DataTypes.STRING 
+    }, 
+    password: {
+      types: DataTypes.STRING
+    },
+    is_student: {
+      types: DataTypes.BOOLEAN 
+    },
+    disable:  {
+      types: DataTypes.BOOLEAN
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    } 
   }, {
     sequelize,
     modelName: 'users',
