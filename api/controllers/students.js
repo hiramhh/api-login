@@ -19,7 +19,8 @@ const registry = async (req, res) => {
       email: body.email,
       password: hashPassword,
       is_student: body.is_student,
-      status: true
+      disable: body.disable,
+      admin: body.admin
     });
 
     body.userId = addNewUser.id;
@@ -54,6 +55,12 @@ const login = async (req, res) => {
         return res.status(401).send({
           accessToken: null,
           messagge: "Invalid Password!"
+        });
+      }
+
+      if(user.disable) {
+        return res.status(401).send({
+          error: "acount disable, please contact admin"
         });
       }
   
@@ -100,6 +107,9 @@ const getUserData = async (req, res) => {
         userId: req.id
       }
     });
+
+    const {body} = req;
+    
     user.set(body);
     
     user = await user.save();
@@ -108,6 +118,7 @@ const getUserData = async (req, res) => {
     return res.status(201).send(user);
   }
   catch(error){
+    console.log(error);
     return res.status(400).send(error.messagge);
   }
   

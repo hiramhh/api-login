@@ -21,18 +21,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING 
     }, 
     password: {
-      types: DataTypes.STRING
+      type: DataTypes.STRING
     },
     is_student: {
-      types: DataTypes.BOOLEAN 
+      type: DataTypes.BOOLEAN 
     },
     disable:  {
-      types: DataTypes.BOOLEAN
+      type: DataTypes.BOOLEAN
     },
     admin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
-    } 
+    },
   }, {
     sequelize,
     modelName: 'users',

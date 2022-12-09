@@ -15,13 +15,27 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   students.init({
-    name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    nationality: DataTypes.STRING,
-    gender: DataTypes.STRING,
-    age: DataTypes.INTEGER,
-    description: DataTypes.TEXT,
-    likes: DataTypes.TEXT,
+    name: {
+      type: DataTypes.STRING
+    },
+    last_name: {
+      type: DataTypes.STRING
+    },
+    nationality: {
+      type: DataTypes.STRING
+    },
+    gender: {
+      type: DataTypes.STRING
+    },
+    age: {
+      type: DataTypes.INTEGER
+    },
+    description: {
+      type: DataTypes.TEXT
+    },
+    likes: {
+      type: DataTypes.TEXT
+    },
   }, {
     sequelize,
     modelName: 'students',

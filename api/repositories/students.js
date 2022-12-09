@@ -23,7 +23,7 @@ const createStudent = async (data) => {
       nationality: data.nationality,
       gender: data.gender,
       age: data.age,
-      tiny_description: data.tiny_description,
+      description: data.description,
       likes: data.likes
     });
 
