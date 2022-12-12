@@ -27,6 +27,8 @@ const registry = async (req, res) => {
 
     await studentRepository.createStudent(body);
 
+    delete addNewUser.dataValues.password;
+
     return res.status(201).send(addNewUser);
   } catch (error) {
     console.log(error);
@@ -67,6 +69,8 @@ const login = async (req, res) => {
       const token = jwt.sign({id:user.id}, JWT_KEYWORD, {
         expiresIn: 86400
       });
+
+      delete user.dataValues.password;
 
       return res.status(201).send({
         user: user,
@@ -109,7 +113,7 @@ const getUserData = async (req, res) => {
     });
 
     const {body} = req;
-    
+
     user.set(body);
     
     user = await user.save();

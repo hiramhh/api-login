@@ -7,9 +7,8 @@ const { Router } = require("express");
 
 const router = Router();
 
-// Get all users
-router.get("/users", users.getAll);
 
+// -----------------Students endpoints---------------
 // Create user
 router.post("/students-registry", middleware.getDataValidated.validate, students.registry);
 
@@ -26,5 +25,11 @@ router.put("/update-data", middleware.verifyToken.verifyToken, students.getUserD
 
 // Delete user
 router.delete("/delete-user", middleware.verifyToken.verifyToken, students.deleteUser);
+
+
+// ------------------- Admin endpoints ----------------
+
+// Get all users
+router.get("/users", middleware.verifyToken.verifyToken, middleware.isAdmin.isAdmin, users.getAll);
 
 module.exports = router;

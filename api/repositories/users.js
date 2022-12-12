@@ -25,7 +25,7 @@ const createUser = async (data) => {
       password:data.password,
       is_student: data.is_student,
       disable: data.disable,
-      admin:data.disable
+      admin:data.admin
     });
 
     return user;

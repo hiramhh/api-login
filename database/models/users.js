@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      users.hasOne(models.admins, {
+        onDelete: "CASCADE",
+        hooks: true
+      });
       users.hasOne(models.students, {
         onDelete: "CASCADE",
         hooks: true
@@ -23,15 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING
     },
-    is_student: {
-      type: DataTypes.BOOLEAN 
-    },
     disable:  {
       type: DataTypes.BOOLEAN
-    },
-    admin: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
     },
   }, {
     sequelize,

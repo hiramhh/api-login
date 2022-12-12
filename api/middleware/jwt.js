@@ -7,7 +7,7 @@ const verifyToken = async (req, res, next) => {
     const token = req.header("Authorization").split("Bearer");
 
     if(!token){
-      throw new Error("Proporcione un token");
+      throw new Error("Provide a token");
     }
 
     const decoded = jwt.verify(token[1].trim(), JWT_KEYWORD);

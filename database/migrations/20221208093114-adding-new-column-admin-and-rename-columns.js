@@ -6,8 +6,7 @@ module.exports = {
     try {
       await queryInterface.addColumn(
         "users", "admin", { 
-          type: Sequelize.DataTypes.BOOLEAN,
-          default: false},
+          type: Sequelize.DataTypes.BOOLEAN},
         { transaction }
       );
 
@@ -39,9 +38,12 @@ module.exports = {
       await queryInterface.renameColumn("students", 
       "description", "tiny_description", 
       { transaction });
+
+      await transaction.commit();
       
     } catch (error) {
-      
+      await transaction.rollback();
+      throw error;
     }
   }
 };
