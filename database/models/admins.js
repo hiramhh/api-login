@@ -4,17 +4,18 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class admins extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       admins.belongsTo(models.users);
     }
   }
   admins.init({
-    name: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING
+    },
+    is_admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    }
   }, {
     sequelize,
     modelName: 'admins',

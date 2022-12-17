@@ -8,13 +8,15 @@ const validate = async (req, res, next) => {
         email: req.body.email
       }
     })
-    if (user) {
-      throw new Error("Correo existente");
-      }
+    if (user){
+      res.status(400).send({
+        message: "The email is already in use."});
+  }
+      
     next();
   }
   catch (error){
-    return res.status(400).send(error.messagge);
+    return res.status(400).send(error);
   }
 }
 

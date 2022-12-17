@@ -5,11 +5,7 @@ const {
 const users = require('./users');
 module.exports = (sequelize, DataTypes) => {
   class students extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
       students.belongsTo(models.users);
     }
@@ -36,6 +32,15 @@ module.exports = (sequelize, DataTypes) => {
     likes: {
       type: DataTypes.TEXT
     },
+    disable:  {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
+    },
+    is_admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'students',

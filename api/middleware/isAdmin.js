@@ -2,8 +2,12 @@ const models = require("../../database/models");
 
 
 const isAdmin = async (req, res, next) => {
-  const user = await models.users.findByPk(req.id);
-  if(!user.admin){
+  const user = await models.admins.findOne({
+    where: {
+      userId: req.id
+    }
+  });
+  if(!user){
     return res.status(400).send({message: "Operation not allowed"});
   }
 

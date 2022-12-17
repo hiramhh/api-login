@@ -1,5 +1,6 @@
 const users = require("../controllers/users");
 const students = require("../controllers/students");
+const admins = require("../controllers/admins");
 const middleware = require("../middleware/index");
 
 
@@ -9,25 +10,34 @@ const router = Router();
 
 
 // -----------------Students endpoints---------------
-// Create user
-router.post("/students-registry", middleware.getDataValidated.validate, students.registry);
+// Create a students
+router.post("/students/registry", middleware.getDataValidated.validate, students.registry);
 
-// login
-router.post("/login",students.login);
+// login students
+router.post("/student/login",students.login);
 
-// Get user data by Token
-router.get("/user", middleware.verifyToken.verifyToken, students.dataStudents);
-
-
-// Update user
-router.put("/update-data", middleware.verifyToken.verifyToken, students.getUserData);
+// Get student data by Token
+router.get("/student", middleware.verifyToken.verifyToken, students.dataStudents);
 
 
-// Delete user
-router.delete("/delete-user", middleware.verifyToken.verifyToken, students.deleteUser);
+// Update data student
+router.put("/student", middleware.verifyToken.verifyToken, students.getUserData);
+
+
+// Delete student
+router.delete("/student", middleware.verifyToken.verifyToken, students.deleteUser);
 
 
 // ------------------- Admin endpoints ----------------
+
+// Crete an admin
+router.post("/admin/registry", middleware.getDataValidated.validate, admins.registry);
+
+// Login admin
+router.post("/admin/login", admins.login)
+
+// Disable a student
+router.post("/disable/students", middleware.verifyToken.verifyToken, middleware.isAdmin.isAdmin, admins.disableStudent);
 
 // Get all users
 router.get("/users", middleware.verifyToken.verifyToken, middleware.isAdmin.isAdmin, users.getAll);

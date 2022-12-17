@@ -11,9 +11,6 @@ const getStudents = async () =>{
 }
 
 
-
-
-
 const createStudent = async (data) => {
   try {
     const student = await models.students.create({
@@ -29,12 +26,9 @@ const createStudent = async (data) => {
 
     return student;
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
-};
-
-
+}
 
 
 module.exports = { 

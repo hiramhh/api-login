@@ -1,11 +1,12 @@
 const models = require("../../database/models");
 
+
 const getUsers = async () =>{
   try{
-    const users = await models.users.findAll({
-      attributes: { exclude : ["password"]},
+    const users = await models.students.findAll({
       include: {
-        model: models.students
+        model: models.users,
+        attributes: { exclude : ["password"]},
       }
     });
 
@@ -16,16 +17,11 @@ const getUsers = async () =>{
 }
 
 
-
 const createUser = async (data) => {
   try {
-
     const user = await models.users.create({
       email: data.email,
       password:data.password,
-      is_student: data.is_student,
-      disable: data.disable,
-      admin:data.admin
     });
 
     return user;
@@ -33,9 +29,30 @@ const createUser = async (data) => {
     console.log(error);
     throw new Error(error);
   }
-};
+}
+
+
+const getInstanceUserModelByEmail = async (data) => {
+  try {
+    const user = await models.users.findOne({
+      where: {
+        email: data.email
+      }
+    });
+    return user;
+
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+
+
 
 module.exports = { 
   getUsers,
-  createUser
+  createUser,
+  getInstanceUserModelByEmail
 };
+
+

@@ -11,16 +11,12 @@ const registry = async (req, res) => {
   try {
     const { body } = req;
 
-
     let hashPassword = bcrypt.hashSync(body.password, 8);
 
 
     const addNewUser = await userRepository.createUser({
       email: body.email,
       password: hashPassword,
-      is_student: body.is_student,
-      disable: body.disable,
-      admin: body.admin
     });
 
     body.userId = addNewUser.id;
@@ -31,24 +27,27 @@ const registry = async (req, res) => {
 
     return res.status(201).send(addNewUser);
   } catch (error) {
-    console.log(error);
-    return res.status(500).send("Probando mensaje");
+    return res.status(500).send(error);
   }
 };
 
 
 const login = async (req, res) => {
   try {
-    const user = await models.users.findOne({
-      where: {
-        email: req.body.email
-      }
-    })
+
+    const {body} = req;
+
+    const user = await userRepository.getInstanceUserModelByEmail({
+      email: body.email
+    });
+
     if (!user){
       return res.status(404).send({
         messagge: "User Not Found."
       });
     }
+
+
     const passworValid = await bcrypt.compareSync(
       req.body.password, user.password
       );
@@ -66,6 +65,7 @@ const login = async (req, res) => {
         });
       }
   
+
       const token = jwt.sign({id:user.id}, JWT_KEYWORD, {
         expiresIn: 86400
       });
@@ -86,19 +86,24 @@ const login = async (req, res) => {
   }
 }
 
+
+
 const dataStudents = async (req, res) => {
   try{
+
     const user = await models.students.findOne({
       where:{
         userId: req.id
       }
-    })
+    });
+
+
     if (user) {
       return res.status(201).send(user);
       }}
   catch (error){
     console.log(error);
-    return res.status(400).send("error en la funcion dataStudents",error.messagge);
+    return res.status(404).send("error en la funcion dataStudents",error.messagge);
   }
 }
 
