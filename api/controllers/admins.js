@@ -6,6 +6,9 @@ const {JWT_KEYWORD} = require("../../config");
 const jwt = require("jsonwebtoken");
 
 
+// Función que se usa en el endpoint de creación y registro
+// para un administrador nuevo en la plataforma
+
 const registry = async (req, res) => {
   try {
     const { body } = req;
@@ -30,6 +33,8 @@ const registry = async (req, res) => {
 }
 
 
+// Función que le proporciona al usuario administrador una 
+// opción para iniciar sesión en la plataforma
 const login = async (req, res) => {
   try {
 
@@ -73,6 +78,8 @@ const login = async (req, res) => {
   }
 }
 
+// La función disable student sirve para que el administrador tenga el
+// permiso habilitar o deshabilitar la cuenta de un estudiante
 
 const disableStudent = async (req, res) => {
   try {

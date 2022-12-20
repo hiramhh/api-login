@@ -1,5 +1,9 @@
 const userRepository = require("../repositories/users");
 
+
+// La función "getAll" permite al administrador mostrar las
+// cuentas de todos los estudiantes, así como su informacíón
+
 const getAll = async (req, res) => {
   try {
     const showAllUsers = await userRepository.getUsers();
@@ -15,8 +19,6 @@ const getAll = async (req, res) => {
 };
 
 
-
-
-module.exports = {
+module.exports = { 
   getAll
  };
