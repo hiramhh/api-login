@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const {JWT_KEYWORD} = require("../../config");
 
+// La función verifyToken es el middleware principal de autenticación
+// basado en tokkens
+
 
 const verifyToken = async (req, res, next) => {
   try{

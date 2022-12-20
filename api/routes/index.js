@@ -21,11 +21,11 @@ router.get("/student", middleware.verifyToken.verifyToken, students.dataStudents
 
 
 // Update data student
-router.put("/student", middleware.verifyToken.verifyToken, students.getUserData);
+router.put("/student", middleware.verifyToken.verifyToken, students.updateStudentData);
 
 
 // Delete student
-router.delete("/student", middleware.verifyToken.verifyToken, students.deleteUser);
+router.delete("/student", middleware.verifyToken.verifyToken, students.deleteStudent);
 
 
 // ------------------- Admin endpoints ----------------

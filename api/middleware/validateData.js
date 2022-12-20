@@ -1,6 +1,9 @@
 const models = require("../../database/models");
 
 
+// Middleware creado para ser utilizado en los endpoints de creación y
+// registros de estudiantes y administradores.
+
 const validate = async (req, res, next) => {
   try{
     const user = await models.users.findOne({

@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 
+// Función que se usa en el endpoint de creación y registro
+// de estudiante nuevo en la plataforma, la función maneja las peticiones y trabaja en conjunto con la función createUser en el archivo users, en la carpeta respositories
 
 const registry = async (req, res) => {
   try {
@@ -31,7 +33,8 @@ const registry = async (req, res) => {
   }
 };
 
-
+// Función que le proporciona al usuario estudiante una 
+// opción para iniciar sesión en la plataforma, aqui mismo se importa la función getInstanceUserModelByEmail.
 const login = async (req, res) => {
   try {
 
@@ -41,13 +44,26 @@ const login = async (req, res) => {
       email: body.email
     });
 
+    const student = await models.students.findOne({
+      where:{
+        userId: user.id
+      }
+    });
+
+
     if (!user){
       return res.status(404).send({
         messagge: "User Not Found."
       });
     }
 
+    if(student.disable) {
+      return res.status(401).send({
+        messagge: "acount disable, please contact admin"
+      });
+    }
 
+    
     const passworValid = await bcrypt.compareSync(
       req.body.password, user.password
       );
@@ -59,12 +75,6 @@ const login = async (req, res) => {
         });
       }
 
-      if(user.disable) {
-        return res.status(401).send({
-          error: "acount disable, please contact admin"
-        });
-      }
-  
 
       const token = jwt.sign({id:user.id}, JWT_KEYWORD, {
         expiresIn: 86400
@@ -86,7 +96,8 @@ const login = async (req, res) => {
   }
 }
 
-
+// La función dataStudents permite al usuario estudiante la
+// opción de consultar su información personal
 
 const dataStudents = async (req, res) => {
   try{
@@ -108,7 +119,10 @@ const dataStudents = async (req, res) => {
 }
 
 
-const getUserData = async (req, res) => {
+// La función updateUserData permite al estudiante modificar
+// alguna información personal
+
+const updateStudentData = async (req, res) => {
   try{
 
     let user = await models.students.findOne({
@@ -133,7 +147,11 @@ const getUserData = async (req, res) => {
   
 }
 
-const deleteUser = async (req, res) => {
+
+// Como su nombre lo indica, la función deleteStudent permite
+// al usuario student eliminar su cuenta de la plataforma
+
+const deleteStudent = async (req, res) => {
   try {
     
     let user = await models.users.findOne({
@@ -158,6 +176,6 @@ module.exports = {
   registry,
   login,
   dataStudents,
-  getUserData,
-  deleteUser
+  updateStudentData,
+  deleteStudent
 };
